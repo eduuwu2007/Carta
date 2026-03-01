@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carta</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:pink;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+}
+
+/* Pétalos */
+.petal{
+  position:absolute;
+  top:-40px;
+  width:18px;
+  height:18px;
+  background:red;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  opacity:.8;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* Sobre */
+.envelope{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:320px;
+  height:200px;
+  background:#fff;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  overflow:hidden;
+}
+
+/* Tapa */
+.flap{
+  position:absolute;
+  inset:0;
+  background:#f3f3f3;
+  clip-path:polygon(0 0,100% 0,50% 50%);
+  transform-origin:top;
+  transition:.6s;
+  z-index:3;
+}
+.open .flap{transform:rotateX(180deg);}
+
+/* Corazón */
+.heart{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(45deg);
+  width:40px;
+  height:40px;
+  background:red;
+  z-index:4;
+}
+.heart::before,
+.heart::after{
+  content:"";
+  position:absolute;
+  width:40px;
+  height:40px;
+  background:red;
+  border-radius:50%;
+}
+.heart::before{top:-20px;}
+.heart::after{left:-20px;}
+
+.hide-heart{display:none;}
+
+/* Contenido */
+.content{
+  position:absolute;
+  inset:0;
+  padding:20px;
+  box-sizing:border-box;
+  display:none;
+  text-align:center;
+}
+.open .content{display:block;}
+
+.text.hide-text{display:none;}
+
+/* Imagen centrada */
+.image-box{
+  display:none;
+  width:120px;
+  height:120px;
+  border:2px dashed #ccc;
+  margin:0 auto;
+}
+.show-image .image-box{display:block;}
+
+img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" onclick="handleClick()">
+  <div class="flap"></div>
+  <div class="heart"></div>
+
+  <div class="content">
+   <div class="image-box">
+  <img src="imagen/kissingme.jpg" alt="kissingme">
+  <p class="image-text">¿nosotros?</p>
+    </div>
+
+    <div class="text">
+      <h3>Para ti</h3>
+      <p>Te amo mucho alecita preciosa feliz cumple muakkk 
+      cada dia desde que te conoci ha sido mejor para mi porque tu eres la mejor 💗</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let clicks = 0;
+const envelope = document.querySelector('.envelope');
+const heart = document.querySelector('.heart');
+const text = document.querySelector('.text');
+
+function handleClick(){
+  clicks++;
+
+  if(clicks === 1){
+    envelope.classList.add('open');
+    heart.classList.add('hide-heart');
+  }
+  else if(clicks === 2){
+    envelope.classList.add('show-image');
+    text.classList.add('hide-text');
+  }
+}
+
+/* Pétalos */
+for(let i=0;i<30;i++){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.style.left=Math.random()*100+'vw';
+  p.style.animationDuration=(5+Math.random()*5)+'s';
+  p.style.opacity=Math.random();
+  document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
+
